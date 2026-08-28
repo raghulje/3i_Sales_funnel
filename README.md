@@ -8,6 +8,18 @@ Sales pipeline app for 3i Medical Technologies (MRI, FPD, Gamma Camera).
 - `client/` — React 18 + Vite. Production build: `client/out`
 - `SERVE_CLIENT=true` — one process on **port 4090** serves the UI and `/api/v1`
 
+## Environment
+
+Copy the example env files, then fill in local values. Do not commit `.env`.
+
+```bash
+copy server\.env.example server\.env
+copy client\.env.example client\.env
+```
+
+- `server/.env.example` — database, JWT, port, and optional SMTP
+- `client/.env.example` — Vite API port / URL (needed only for `npm run dev`)
+
 ## Database
 
 ```bash
@@ -16,14 +28,6 @@ npm install
 npm run migrate
 npm run seed
 ```
-
-Seed logins:
-
-| Email | Password | Role |
-|---|---|---|
-| raghul.je@refex.co.in | RefexAdmin@ | Admin |
-| prem.thakur@3imedical.com | Sales@3i | North sales |
-| west.sales@3imedical.com | Sales@3i | West sales |
 
 ## Run
 
