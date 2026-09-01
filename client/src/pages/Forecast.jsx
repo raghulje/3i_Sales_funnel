@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { api, formatINR, qs } from "../api.js";
 import { Kpi, Box } from "../components/ui.jsx";
+import { CHART_GRID, CHART_TICK, CHART_TICK_SM } from "../lib/chartTheme.js";
 
 const COLORS = ["#2079B7", "#8CBC43", "#EF6A31", "#44467D", "#3F8BA2", "#0D4574"];
 
@@ -25,9 +26,9 @@ export default function Forecast({ region }) {
             <div className="rm-chart-box">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.byStage} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
-                  <CartesianGrid stroke="#E2E8F0" vertical={false} />
-                  <XAxis dataKey="label" tick={{ fontSize: 12, fill: "#64748b" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 11, fill: "#64748b" }} axisLine={false} tickLine={false} />
+                  <CartesianGrid stroke={CHART_GRID} vertical={false} />
+                  <XAxis dataKey="label" tick={CHART_TICK} axisLine={false} tickLine={false} />
+                  <YAxis tick={CHART_TICK_SM} axisLine={false} tickLine={false} />
                   <Tooltip formatter={(v) => formatINR(v)} />
                   <Bar dataKey="value" fill="#2079B7" radius={[8, 8, 0, 0]} />
                 </BarChart>

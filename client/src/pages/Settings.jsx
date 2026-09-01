@@ -19,22 +19,22 @@ export default function Settings() {
   return (
     <div className="rm-page">
       <Box title="Data quality score" type="primary">
-        <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap" }}>
-          <div style={{ fontSize: 42, fontWeight: 800, color: "#2079B7" }}>{q.score}%</div>
-          <div className="rm-dl" style={{ flex: 1, margin: 0 }}>
+        <div className="rm-stat-row">
+          <div className="rm-score">{q.score}%</div>
+          <div className="rm-dl rm-dl--inline">
             <div><dt>Issues</dt><dd>{q.issuesFound}</dd></div>
             <div><dt>Missing</dt><dd>{q.missing}</dd></div>
             <div><dt>Inconsistent</dt><dd>{q.inconsistent}</dd></div>
           </div>
         </div>
         {isAdmin ? (
-          <button type="button" className="btn btn-default" style={{ marginTop: 16 }} onClick={reset}>
+          <button type="button" className="btn btn-default rm-mt-4" onClick={reset}>
             Reset data to Excel seed
           </button>
         ) : null}
       </Box>
       <Box title="Application">
-        <p className="text-muted" style={{ margin: 0 }}>
+        <p className="text-muted rm-m-0">
           Database <code>3i_Sales_funnel</code> · JWT session · client build served from Express when <code>SERVE_CLIENT=true</code>.
         </p>
       </Box>

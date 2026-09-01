@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { api, formatINR, qs } from "../api.js";
-import { Box, SmallBox } from "../components/ui.jsx";
+import { Box, Kpi } from "../components/ui.jsx";
 import FunnelBars, { FUNNEL_COLORS } from "../components/FunnelBars.jsx";
 import { useAuth } from "../api/AuthContext.jsx";
+import { CHART_TICK } from "../lib/chartTheme.js";
 
 export default function Dashboard({ region }) {
   const nav = useNavigate();
@@ -25,18 +26,18 @@ export default function Dashboard({ region }) {
     <div className="rm-page">
       <div className="rm-page-head">
         <div>
-          <p style={{ margin: 0, fontSize: 15, fontWeight: 650, color: "#0f172a" }}>{greet}, {who}</p>
+          <p className="rm-page-greet">{greet}, {who}</p>
           <p>Here is how the sales pipeline is performing.</p>
         </div>
       </div>
 
-      <div className="row">
-        <SmallBox to="/opportunities" count={formatINR(k.pipeline)} label="Total pipeline" color="bg-teal" icon="fas fa-rupee-sign" footer="Open value" />
-        <SmallBox to="/opportunities" count={k.opportunities} label="Opportunities" color="bg-aqua" icon="fas fa-briefcase" footer={`${k.open} open`} />
-        <SmallBox to="/forecast" count={formatINR(k.expected)} label="Expected revenue" color="bg-olive" icon="fas fa-chart-line" footer="Weighted pipeline" />
-        <SmallBox to="/pipeline" count={k.highCount} label="High probability" color="bg-orange" icon="fas fa-bolt" footer={formatINR(k.highValue)} />
-        <SmallBox to="/opportunities" count={formatINR(k.booked)} label="Booked business" color="bg-green" icon="fas fa-check-circle" footer={`${k.bookedCount} won`} />
-        <SmallBox to="/lost" count={formatINR(k.lost)} label="Lost business" color="bg-red" icon="fas fa-times-circle" footer={`${k.lostCount} lost`} />
+      <div className="rm-kpi-row rm-kpi-row--6">
+        <Kpi to="/opportunities" label="Total pipeline" value={formatINR(k.pipeline)} hint="Open value" icon="fa-rupee-sign" />
+        <Kpi to="/opportunities" tone="teal" label="Opportunities" value={k.opportunities} hint={`${k.open} open`} icon="fa-briefcase" />
+        <Kpi to="/forecast" tone="green" label="Expected revenue" value={formatINR(k.expected)} hint="Weighted pipeline" icon="fa-chart-line" />
+        <Kpi to="/pipeline" tone="orange" label="High probability" value={k.highCount} hint={formatINR(k.highValue)} icon="fa-bolt" />
+        <Kpi to="/opportunities" tone="green" label="Booked business" value={formatINR(k.booked)} hint={`${k.bookedCount} won`} icon="fa-check-circle" />
+        <Kpi to="/lost" tone="rose" label="Lost business" value={formatINR(k.lost)} hint={`${k.lostCount} lost`} icon="fa-times-circle" />
       </div>
 
       <div className="row">
@@ -83,7 +84,7 @@ export default function Dashboard({ region }) {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.products} layout="vertical" margin={{ left: 8, right: 12, top: 8, bottom: 8 }}>
                   <XAxis type="number" hide />
-                  <YAxis type="category" dataKey="name" width={110} tick={{ fontSize: 12, fill: "#475569" }} axisLine={false} tickLine={false} />
+                  <YAxis type="category" dataKey="name" width={110} tick={CHART_TICK} axisLine={false} tickLine={false} />
                   <Tooltip formatter={(v) => formatINR(v)} cursor={{ fill: "rgba(32,121,183,0.06)" }} />
                   <Bar dataKey="value" fill="#2079B7" radius={[0, 8, 8, 0]} barSize={16} />
                 </BarChart>

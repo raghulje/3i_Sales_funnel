@@ -1,6 +1,7 @@
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../api/AuthContext.jsx";
+import { Select } from "./ui.jsx";
 
 const NARROW_MQ = "(max-width: 991px)";
 
@@ -124,15 +125,17 @@ export default function Shell({ region, setRegion, onSearch }) {
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search opportunities, customers…" />
             <button type="submit"><i className="fas fa-search" /></button>
           </form>
-          <select
-            className="form-control header-region"
+          <Select
+            className="header-region"
+            compact
             value={region}
-            onChange={(e) => setRegion(e.target.value)}
-          >
-            <option value="all">All regions</option>
-            <option value="north">Prem Territory</option>
-            <option value="west">West Sales Team</option>
-          </select>
+            onChange={setRegion}
+            options={[
+              { value: "all", label: "All regions" },
+              { value: "north", label: "Prem Territory" },
+              { value: "west", label: "West Sales Team" },
+            ]}
+          />
           <div className="navbar-custom-menu">
             <ul className="navbar-nav">
               <li><NavLink to="/opportunities" title="Opportunities"><i className="fas fa-briefcase" /></NavLink></li>

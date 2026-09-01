@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { api } from "../api.js";
-import { Box, Field } from "../components/ui.jsx";
+import { Box, Field, Select, DateField } from "../components/ui.jsx";
 import { useToast } from "../components/Toast.jsx";
 
 function editFrom(item) {
@@ -94,40 +94,36 @@ export default function OpportunityEdit() {
             <input className="form-control" value={form.location} onChange={(e) => set("location", e.target.value)} />
           </Field>
           <Field label="Product">
-            <select className="form-control" value={form.product} onChange={(e) => set("product", e.target.value)}>
-              {meta.products.map((o) => <option key={o}>{o}</option>)}
-            </select>
+            <Select value={form.product} onChange={(v) => set("product", v)} options={meta.products} />
           </Field>
           <Field label="Value (₹ Crore)">
             <input className="form-control" type="number" step="0.01" value={form.valueCr} onChange={(e) => set("valueCr", e.target.value)} />
           </Field>
           <Field label="Expected closure">
-            <input className="form-control" type="date" value={form.expectedClosure} onChange={(e) => set("expectedClosure", e.target.value)} />
+            <DateField
+              value={form.expectedClosure}
+              onChange={(v) => set("expectedClosure", v)}
+              placeholder="Select closure date"
+            />
           </Field>
           <Field label="Customer type">
-            <select className="form-control" value={form.customerType} onChange={(e) => set("customerType", e.target.value)}>
-              {meta.customerTypes.map((o) => <option key={o}>{o}</option>)}
-            </select>
+            <Select value={form.customerType} onChange={(v) => set("customerType", v)} options={meta.customerTypes} />
           </Field>
           <Field label="Site status">
-            <select className="form-control" value={form.siteStatus} onChange={(e) => set("siteStatus", e.target.value)}>
-              {meta.siteStatuses.map((o) => <option key={o}>{o}</option>)}
-            </select>
+            <Select value={form.siteStatus} onChange={(v) => set("siteStatus", v)} options={meta.siteStatuses} />
           </Field>
           <Field label="Funding status">
-            <select className="form-control" value={form.fundingStatus} onChange={(e) => set("fundingStatus", e.target.value)}>
-              {meta.fundingStatuses.map((o) => <option key={o}>{o}</option>)}
-            </select>
+            <Select value={form.fundingStatus} onChange={(v) => set("fundingStatus", v)} options={meta.fundingStatuses} />
           </Field>
           <Field label="Current stage">
-            <select className="form-control" value={form.processStage} onChange={(e) => set("processStage", e.target.value)}>
-              {meta.processStages.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
-            </select>
+            <Select
+              value={form.processStage}
+              onChange={(v) => set("processStage", v)}
+              options={meta.processStages.map((s) => ({ value: s.id, label: s.label }))}
+            />
           </Field>
           <Field label="Sales manager">
-            <select className="form-control" value={form.owner} onChange={(e) => set("owner", e.target.value)}>
-              {meta.owners.map((o) => <option key={o}>{o}</option>)}
-            </select>
+            <Select value={form.owner} onChange={(v) => set("owner", v)} options={meta.owners} />
           </Field>
         </div>
       </Box>

@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
+export { default as Select } from "./AppSelect.jsx";
+export { default as DateField } from "./DateField.jsx";
+
 export function Box({ title, children, tools, type = "default", footer }) {
   return (
     <div className={`box box-${type}`}>
@@ -27,40 +30,37 @@ export function Field({ label, children, required, wide, full }) {
   );
 }
 
-export function SmallBox({ to, count, label, color, icon, colClass = "col-lg-2 col-xs-6", footer }) {
-  const box = (
-    <div className={`dashboard small-box ${color}`}>
-      <div className="inner">
-        <h3>{typeof count === "number" ? count.toLocaleString("en-IN") : count}</h3>
-        <p>{label}</p>
-      </div>
-      <div className="icon" aria-hidden="true"><i className={icon} /></div>
-      <span className="small-box-footer">
-        {footer || (to ? <>View all <i className="fas fa-arrow-right" /></> : "Overview")}
-      </span>
-    </div>
-  );
+export function SmallBox({ to, count, label, tone = "blue", icon, footer }) {
+  const toneMap = { blue: "", cyan: "teal", green: "green", lime: "green", orange: "orange", rose: "rose" };
+  const iconClass = icon?.replace(/^fas\s+/, "") || "fa-chart-line";
+  const value = typeof count === "number" ? count.toLocaleString("en-IN") : count;
   return (
-    <div className={colClass}>
-      {to ? <Link to={to} className="small-box-link">{box}</Link> : <div className="small-box-static">{box}</div>}
-    </div>
+    <Kpi
+      to={to}
+      label={label}
+      value={value}
+      hint={footer}
+      icon={iconClass}
+      tone={toneMap[tone] || ""}
+    />
   );
 }
 
-export function Kpi({ label, value, hint, icon, tone, active, onClick }) {
-  const className = `rm-kpi${tone ? ` rm-kpi--${tone}` : ""}${active ? " is-active" : ""}${onClick ? "" : " is-static"}`;
-  const inner = (
-    <>
+export function Kpi({ label, value, hint, icon, tone, active, onClick, to }) {
+  const className = `rm-kpi${tone ? ` rm-kpi--${tone}` : ""}${active ? " is-active" : ""}${onClick || to ? "" : " is-static"}`;
+  const card = (
+    <div className={className}>
       <span className="rm-kpi__label">{label}</span>
       <span className="rm-kpi__value">{value}</span>
       <span className="rm-kpi__hint">{hint}</span>
       <span className="rm-kpi__icon" aria-hidden><i className={`fas ${icon}`} /></span>
-    </>
+    </div>
   );
-  if (!onClick) return <div className={className}>{inner}</div>;
+  if (to) return <Link to={to} className="rm-kpi-link">{card}</Link>;
+  if (!onClick) return card;
   return (
-    <button type="button" className={className} onClick={onClick}>
-      {inner}
+    <button type="button" className="rm-kpi-btn" onClick={onClick}>
+      {card}
     </button>
   );
 }

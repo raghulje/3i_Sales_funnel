@@ -4,6 +4,7 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 import { api, formatINR, qs } from "../api.js";
 import FunnelBars, { FUNNEL_COLORS } from "../components/FunnelBars.jsx";
 import { Box, Modal } from "../components/ui.jsx";
+import { CHART_TICK, CHART_TICK_SM } from "../lib/chartTheme.js";
 
 export default function Funnel({ region }) {
   const nav = useNavigate();
@@ -61,8 +62,8 @@ export default function Funnel({ region }) {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data.stages} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
               <CartesianGrid stroke="#E2E8F0" vertical={false} />
-              <XAxis dataKey="label" tick={{ fontSize: 11, fill: "#64748b" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "#64748b" }} axisLine={false} tickLine={false} />
+              <XAxis dataKey="label" tick={CHART_TICK_SM} axisLine={false} tickLine={false} />
+              <YAxis tick={CHART_TICK_SM} axisLine={false} tickLine={false} />
               <Tooltip />
               <Bar dataKey="count" fill="#2079B7" radius={[8, 8, 0, 0]} name="Opportunities" />
             </BarChart>
@@ -83,7 +84,7 @@ export default function Funnel({ region }) {
                   <tr key={o.id} style={{ cursor: "pointer" }} onClick={() => nav(`/opportunities/${encodeURIComponent(o.id)}`)}>
                     <td>
                       <strong>{o.customer}</strong>
-                      <div className="text-muted" style={{ fontSize: 12 }}>{o.location}</div>
+                      <div className="text-muted text-sm">{o.location}</div>
                     </td>
                     <td>{o.product}</td>
                     <td>{formatINR(o.value)}</td>

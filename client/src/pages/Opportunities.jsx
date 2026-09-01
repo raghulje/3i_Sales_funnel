@@ -39,7 +39,7 @@ export default function Opportunities({ region, search }) {
                 <tr><td colSpan={10} className="text-muted">No matching records found</td></tr>
               ) : rows.map((o) => (
                 <tr key={o.id} onClick={() => open(o.id)} style={{ cursor: "pointer" }}>
-                  <td className="text-muted" style={{ fontFamily: "ui-monospace, monospace", fontWeight: 700 }}>{o.id}</td>
+                  <td className="text-muted text-mono">{o.id}</td>
                   <td><strong>{o.customer}</strong></td>
                   <td>{o.location}</td>
                   <td>{o.product}</td>

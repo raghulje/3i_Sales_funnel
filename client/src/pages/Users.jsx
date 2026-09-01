@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api.js";
 import { useToast } from "../components/Toast.jsx";
-import { Field, Modal } from "../components/ui.jsx";
+import { Field, Modal, Select } from "../components/ui.jsx";
 
 const empty = {
   first_name: "",
@@ -93,11 +93,15 @@ export default function Users() {
               </Field>
             ))}
             <Field label="Region">
-              <select className="form-control" value={form.region_key} onChange={(e) => setForm({ ...form, region_key: e.target.value })}>
-                <option value="north">North</option>
-                <option value="west">West</option>
-                <option value="">All</option>
-              </select>
+              <Select
+                value={form.region_key}
+                onChange={(v) => setForm({ ...form, region_key: v })}
+                options={[
+                  { value: "north", label: "North" },
+                  { value: "west", label: "West" },
+                  { value: "", label: "All" },
+                ]}
+              />
             </Field>
             <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
               <button type="button" className="btn btn-default" onClick={() => setOpen(false)}>Cancel</button>

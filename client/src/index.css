@@ -13,5 +13,4 @@
 }
 
 html, body, #root { height: 100%; }
-body { margin: 0; background: #fafbfc; color: #0f172a; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 button { cursor: pointer; }
